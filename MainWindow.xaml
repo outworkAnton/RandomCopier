@@ -47,14 +47,14 @@
 
             </Grid>
         </GroupBox>
-        <Button Content="Start" Margin="443,0,293,97.934" VerticalAlignment="Bottom" Height="44" Click="Start_Click"/>
+        <Button Content="Start" Margin="443,0,293,88" VerticalAlignment="Bottom" Height="44" Click="Start_Click"/>
         <Button Content="Exit" Margin="443,0,293,10" VerticalAlignment="Bottom" Height="44" Click="Exit_Click"/>
-        <ProgressBar x:Name="Progress" Height="13" Margin="443,0,293,69" VerticalAlignment="Bottom" Visibility="Collapsed"/>
-        <Label Content="Current folder:" HorizontalAlignment="Right" Margin="0,0,191.006,115.974" VerticalAlignment="Bottom"/>
-        <Label Content="Files processed:" HorizontalAlignment="Right" Margin="0,0,185.266,60.99" VerticalAlignment="Bottom"/>
+        <ProgressBar x:Name="Progress" Height="13" Margin="443,0,293,64" VerticalAlignment="Bottom"/>
+        <Label Content="Folders processed:" HorizontalAlignment="Right" Margin="0,0,170,106" VerticalAlignment="Bottom"/>
+        <Label Content="Files processed:" HorizontalAlignment="Right" Margin="0,0,185,56" VerticalAlignment="Bottom"/>
         <Label Content="Time elapsed:" HorizontalAlignment="Right" Margin="0,0,195.329,10" VerticalAlignment="Bottom"/>
-        <Label x:Name="CurFold" Content="None" Margin="724.924,0,125.002,115.974" VerticalAlignment="Bottom" d:LayoutOverrides="Width"/>
-        <Label x:Name="FilesProcCount" Content="0" HorizontalAlignment="Left" Margin="724.925,0,0,60.99" VerticalAlignment="Bottom"/>
+        <Label x:Name="FoldCnt" Content="0" Margin="725,0,125,106" VerticalAlignment="Bottom"/>
+        <Label x:Name="FilesProcCount" Content="0" HorizontalAlignment="Left" Margin="725,0,0,56" VerticalAlignment="Bottom"/>
         <Label x:Name="TimeElapsed" Content="0 min 0 sec" HorizontalAlignment="Left" Margin="724.925,0,0,10" VerticalAlignment="Bottom"/>
     </Grid>
 </Window>

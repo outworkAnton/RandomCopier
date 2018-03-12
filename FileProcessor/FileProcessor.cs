@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Threading;
 
 namespace Sorter.FileProcessor
 {
@@ -25,6 +20,8 @@ namespace Sorter.FileProcessor
         private string RenameSymbols { get; }
         private List<FileInfo> FilesList { get; }
         private TimeSpan span;
+        private readonly object _itemObj = new object();
+        private readonly object _foldObj = new object();
 
         public FileProcessor(Mode mode, string sourceDirectory, bool? alsoFromSubfolders, string targetDirectory,
             string newFolderName,
@@ -90,7 +87,15 @@ namespace Sorter.FileProcessor
                         break;
                 }
 
-                MainWindow.mainWindow.progress++;
+                lock (_itemObj)
+                {
+                    MainWindow.mainWindow.progress++;
+                }
+            }
+
+            lock (_foldObj)
+            {
+                MainWindow.mainWindow.foldersCnt++;
             }
         }
 

@@ -36,6 +36,12 @@ namespace Sorter
             set => Dispatcher.Invoke(() => { Progress.Maximum = value; }, DispatcherPriority.Background);
         }
 
+        internal double foldersCnt
+        {
+            get => Dispatcher.Invoke(() => Convert.ToDouble(FoldCnt.Content), DispatcherPriority.Background);
+            set => Dispatcher.Invoke(() => { FoldCnt.Content = value; }, DispatcherPriority.Background);
+        }
+
         public MainWindow()
         {
             InitializeComponent();
