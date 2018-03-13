@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Sorter.FileProcessor
 {
@@ -19,9 +18,6 @@ namespace Sorter.FileProcessor
         private RenameMode RenameMode { get; }
         private string RenameSymbols { get; }
         private List<FileInfo> FilesList { get; }
-        private TimeSpan span;
-        private readonly object _itemObj = new object();
-        private readonly object _foldObj = new object();
 
         public FileProcessor(Mode mode, string sourceDirectory, bool? alsoFromSubfolders, string targetDirectory,
             string newFolderName,
@@ -48,7 +44,6 @@ namespace Sorter.FileProcessor
             MainWindow.mainWindow.max = FilesList.Count;
             var foldersCount = Math.Ceiling((double)FilesList.Count / CountFilesPerFolder);
             var fileStartIndex = 0;
-            List<Task> tasks = new List<Task>();
             for (var folderIndex = 0; folderIndex < foldersCount; folderIndex++)
             {
                 var newDir =
@@ -61,16 +56,10 @@ namespace Sorter.FileProcessor
                     if (fileName == null) break;
                     filesQueue.Add(FilesList[i], newDir.FullName + "\\" + fileName);
                 }
-
-                tasks.Add(Task.Factory.StartNew(() =>
-                {
-                    ProcessItem(filesQueue);
-                }));
+                ProcessItem(filesQueue);
 
                 fileStartIndex += CountFilesPerFolder;
             }
-
-            Task.WaitAll(tasks.ToArray());
         }
 
         private void ProcessItem(Dictionary<FileInfo, string> queue)
@@ -87,16 +76,10 @@ namespace Sorter.FileProcessor
                         break;
                 }
 
-                lock (_itemObj)
-                {
-                    MainWindow.mainWindow.progress++;
-                }
+                MainWindow.mainWindow.progress++;
             }
 
-            lock (_foldObj)
-            {
-                MainWindow.mainWindow.foldersCnt++;
-            }
+            MainWindow.mainWindow.foldersCnt++;
         }
 
         private string GetFileName(int i)
@@ -124,7 +107,7 @@ namespace Sorter.FileProcessor
 
                 return fileName + ext;
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 return null;
             }

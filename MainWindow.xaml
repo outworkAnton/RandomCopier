@@ -16,12 +16,12 @@
                 <Label Content="Source directory:" HorizontalAlignment="Right" Margin="0,40.96,747.883,0" VerticalAlignment="Top"/>
                 <Label Content="Target directory:" HorizontalAlignment="Right" Margin="0,40.96,318.19,0" VerticalAlignment="Top"/>
                 <TextBox x:Name="TargetDirectory" HorizontalAlignment="Right" Height="23" Margin="0,71.92,111.75,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="302"/>
-                <TextBox x:Name="NewFolderName" HorizontalAlignment="Left" Height="23" Margin="10,0,0,67.226" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="171.75"/>
+                <TextBox x:Name="NewFolderName" HorizontalAlignment="Left" Height="23" Margin="10,0,0,67.226" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="171.75" Text="Sub"/>
                 <Label Content="New folder name:" HorizontalAlignment="Right" Margin="0,99.92,743.179,95.226" d:LayoutOverrides="Height"/>
-                <TextBox x:Name="NewFolderPostfix" HorizontalAlignment="Left" Height="23" Margin="220.25,0,0,67.226" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="171.75"/>
+                <TextBox x:Name="NewFolderPostfix" HorizontalAlignment="Left" Height="23" Margin="220.25,0,0,67.226" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="171.75" Text="1"/>
                 <Label Content="New folder postfix:" HorizontalAlignment="Right" Margin="0,99.92,527.026,95.226" d:LayoutOverrides="Height"/>
                 <Label Content="Files per folder:" HorizontalAlignment="Right" Margin="0,99.92,322.82,95.226" d:LayoutOverrides="HorizontalAlignment, Height"/>
-                <TextBox x:Name="FilesPerFolder" HorizontalAlignment="Right" Height="23" Margin="0,0,242,67.226" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="171.75"/>
+                <TextBox x:Name="FilesPerFolder" HorizontalAlignment="Right" Height="23" Margin="0,0,242,67.226" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="171.75" Text="50"/>
                 <ComboBox x:Name="FilesPresort" HorizontalAlignment="Right" Margin="0,0,31.75,68.266" VerticalAlignment="Bottom" Width="165.25" SelectedIndex="0">
                     <ComboBoxItem Content="Random"/>
                     <ComboBoxItem Content="Alphabet"/>

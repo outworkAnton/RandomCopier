@@ -12,8 +12,7 @@ namespace Sorter
         public static IWin32Window GetIWin32Window(this Visual visual)
         {
             var source = PresentationSource.FromVisual(visual) as HwndSource;
-            IWin32Window win = new OldWindow(source.Handle);
-            return win;
+            return new OldWindow(source.Handle);
         }
 
         private class OldWindow : IWin32Window

@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Diagnostics;
-using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
-using System.Windows.Navigation;
 using System.Windows.Threading;
 using Sorter.FileProcessor;
 using Application = System.Windows.Application;
-using ProgressBar = System.Windows.Controls.ProgressBar;
 
 namespace Sorter
 {
@@ -92,23 +87,19 @@ namespace Sorter
 
         private void SelectSource_Click(object sender, RoutedEventArgs e)
         {
-            using (var dlg = new FolderBrowserDialog())
-            {
-                if (dlg.ShowDialog(this.GetIWin32Window()) == System.Windows.Forms.DialogResult.OK)
-                {
-                    SourceDirectory.Text = dlg.SelectedPath;
-                }
-            }
+            SourceDirectory.Text = OpenFolderDialog();
         }
 
         private void SelectTarget_Click(object sender, RoutedEventArgs e)
         {
+            TargetDirectory.Text = OpenFolderDialog();
+        }
+
+        private string OpenFolderDialog()
+        {
             using (var dlg = new FolderBrowserDialog())
             {
-                if (dlg.ShowDialog(this.GetIWin32Window()) == System.Windows.Forms.DialogResult.OK)
-                {
-                    TargetDirectory.Text = dlg.SelectedPath;
-                }
+                return dlg.ShowDialog(this.GetIWin32Window()) == System.Windows.Forms.DialogResult.OK ? dlg.SelectedPath : null;
             }
         }
     }
