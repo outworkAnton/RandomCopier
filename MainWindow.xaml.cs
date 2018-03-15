@@ -4,8 +4,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Threading;
-using Sorter.FileProcessor;
+using System.Text.RegularExpressions;
+using Sorter.FileProcessors;
 using Application = System.Windows.Application;
+using static Sorter.FileProcessors.FileProcessingOptions;
+using System.Windows.Input;
 
 namespace Sorter
 {
@@ -28,13 +31,13 @@ namespace Sorter
 
         internal double max
         {
-            set => Dispatcher.Invoke(() => { Progress.Maximum = value; }, DispatcherPriority.Background);
+            set => Dispatcher.Invoke(() => Progress.Maximum = value, DispatcherPriority.Background);
         }
 
         internal double foldersCnt
         {
             get => Dispatcher.Invoke(() => Convert.ToDouble(FoldCnt.Content), DispatcherPriority.Background);
-            set => Dispatcher.Invoke(() => { FoldCnt.Content = value; }, DispatcherPriority.Background);
+            set => Dispatcher.Invoke(() => FoldCnt.Content = value, DispatcherPriority.Background);
         }
 
         public MainWindow()
@@ -45,16 +48,18 @@ namespace Sorter
 
         private void Start_Click(object sender, RoutedEventArgs e)
         {
-            var mode = MoveMode.IsChecked != null && MoveMode.IsChecked.Value ? Mode.Move : Mode.Copy;
-            var sourceDirectory = SourceDirectory.Text;
-            var alsoFromSubfolders = IncludeSubDirs.IsChecked;
-            var targetDirectory = string.IsNullOrWhiteSpace(TargetDirectory.Text) ? null : TargetDirectory.Text;
-            var newFolderName = NewFolderName.Text;
-            var newFolderPostfix = string.IsNullOrWhiteSpace(NewFolderPostfix.Text) ? 1 : Convert.ToInt32(NewFolderPostfix.Text);
-            var countFilesPerFolder = string.IsNullOrWhiteSpace(FilesPerFolder.Text) ? 0 : Convert.ToInt32(FilesPerFolder.Text);
-            var processMethod = (ProcessMethod) Enum.Parse(typeof(ProcessMethod), FilesPresort.Text, true);
-            var renameMode = (RenameMode) Enum.Parse(typeof(RenameMode), RenameMode.Text.Replace(" ", ""), true);
-            var renameSymbols = Symbols.Text;
+            var options = new FileProcessingOptions(
+                (FileProcessingModeEnum)Enum.Parse(typeof(FileProcessingModeEnum), FileProcessing.Text, true),
+                MoveMode.IsChecked != null && MoveMode.IsChecked.Value ? FileManipulationModeEnum.Move : FileManipulationModeEnum.Copy,
+                SourceDirectory.Text,
+                IncludeSubDirs.IsChecked,
+                string.IsNullOrWhiteSpace(TargetDirectory.Text) ? null : TargetDirectory.Text,
+                NewFolderName.Text,
+                string.IsNullOrWhiteSpace(NewFolderPostfix.Text) ? 1 : Convert.ToInt32(NewFolderPostfix.Text),
+                string.IsNullOrWhiteSpace(FilesPerFolder.Text) ? 0 : Convert.ToInt32(FilesPerFolder.Text),
+                (PresortMethodEnum)Enum.Parse(typeof(PresortMethodEnum), FilesPresort.Text, true),
+                (RenameModeEnum)Enum.Parse(typeof(RenameModeEnum), RenameMode.Text.Replace(" ", ""), true),
+                Symbols.Text);
             var span = new TimeSpan();
 
             var perf = new Stopwatch();
@@ -63,9 +68,7 @@ namespace Sorter
 
             var taskInThread = Task.Factory.StartNew(() =>
             {
-                new FileProcessor.FileProcessor(mode, sourceDirectory, alsoFromSubfolders,
-                    targetDirectory, newFolderName, newFolderPostfix, countFilesPerFolder,
-                    processMethod, renameMode, renameSymbols).ProcessData();
+                new FileProcessorFactory(options).CreateFileProcessor().ProcessData();
             });
             while (!taskInThread.IsCompleted)
             {
@@ -83,6 +86,12 @@ namespace Sorter
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            var regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
 
         private void SelectSource_Click(object sender, RoutedEventArgs e)

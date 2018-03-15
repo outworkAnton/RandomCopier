@@ -5,32 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Sorter"
         mc:Ignorable="d"
-        Title="Sorter" Height="409" Width="897" WindowStyle="None">
+        Title="Sorter" Height="429" Width="897" WindowStyle="ThreeDBorderWindow" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <GroupBox x:Name="GeneralSettings" Header="General" Margin="10,10,10,0" Height="244.066" VerticalAlignment="Top">
             <Grid x:Name="GeneralGrid">
-                <RadioButton x:Name="MoveMode" Content="Move" Height="21" Width="58" Margin="60.75,16,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" d:LayoutOverrides="Width" IsChecked="True"/>
-                <RadioButton x:Name="CopyMode" Content="Copy" Height="21" Width="58" Margin="123.75,16,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" d:LayoutOverrides="Width"/>
-                <Label Content="Mode:" HorizontalAlignment="Left" Margin="10,10,0,0" Width="45.75" VerticalAlignment="Top"/>
-                <TextBox x:Name="SourceDirectory" HorizontalAlignment="Left" Height="23" Margin="10,71.92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="302"/>
-                <Label Content="Source directory:" HorizontalAlignment="Right" Margin="0,40.96,747.883,0" VerticalAlignment="Top"/>
-                <Label Content="Target directory:" HorizontalAlignment="Right" Margin="0,40.96,318.19,0" VerticalAlignment="Top"/>
-                <TextBox x:Name="TargetDirectory" HorizontalAlignment="Right" Height="23" Margin="0,71.92,111.75,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="302"/>
-                <TextBox x:Name="NewFolderName" HorizontalAlignment="Left" Height="23" Margin="10,0,0,67.226" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="171.75" Text="Sub"/>
-                <Label Content="New folder name:" HorizontalAlignment="Right" Margin="0,99.92,743.179,95.226" d:LayoutOverrides="Height"/>
-                <TextBox x:Name="NewFolderPostfix" HorizontalAlignment="Left" Height="23" Margin="220.25,0,0,67.226" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="171.75" Text="1"/>
-                <Label Content="New folder postfix:" HorizontalAlignment="Right" Margin="0,99.92,527.026,95.226" d:LayoutOverrides="Height"/>
-                <Label Content="Files per folder:" HorizontalAlignment="Right" Margin="0,99.92,322.82,95.226" d:LayoutOverrides="HorizontalAlignment, Height"/>
-                <TextBox x:Name="FilesPerFolder" HorizontalAlignment="Right" Height="23" Margin="0,0,242,67.226" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="171.75" Text="50"/>
-                <ComboBox x:Name="FilesPresort" HorizontalAlignment="Right" Margin="0,0,31.75,68.266" VerticalAlignment="Bottom" Width="165.25" SelectedIndex="0">
+                <RadioButton x:Name="MoveMode" Content="Move" Height="21" Width="58" Margin="443,100,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                <RadioButton x:Name="CopyMode" Content="Copy" Height="21" Width="58" Margin="506,100,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" IsChecked="True"/>
+                <Label Content="Manipulation mode:" HorizontalAlignment="Left" Margin="443,69,0,0" Width="133" VerticalAlignment="Top"/>
+                <TextBox x:Name="SourceDirectory" HorizontalAlignment="Left" Height="23" Margin="10,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="302"/>
+                <Label Content="Source directory:" HorizontalAlignment="Right" Margin="0,10,748,0" VerticalAlignment="Top"/>
+                <Label Content="Target directory:" HorizontalAlignment="Right" Margin="0,10,318,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="TargetDirectory" HorizontalAlignment="Right" Height="23" Margin="0,41,112,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="302"/>
+                <TextBox x:Name="NewFolderName" HorizontalAlignment="Left" Height="23" Margin="10,0,0,73" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="172" Text="Sub"/>
+                <Label Content="New folder name:" HorizontalAlignment="Right" Margin="0,94,743,101"/>
+                <TextBox x:Name="NewFolderPostfix" HorizontalAlignment="Left" Height="23" Margin="10,0,0,10" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="172" Text="1" PreviewTextInput="NumberValidationTextBox"/>
+                <Label Content="New folder postfix:" HorizontalAlignment="Right" Margin="0,157,737,38"/>
+                <Label Content="Files per folder:" HorizontalAlignment="Right" Margin="0,94,545,101"/>
+                <TextBox x:Name="FilesPerFolder" HorizontalAlignment="Right" Height="23" Margin="0,0,465,73" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="172" Text="20" PreviewTextInput="NumberValidationTextBox"/>
+                <ComboBox x:Name="FilesPresort" HorizontalAlignment="Right" Margin="0,0,471,10" VerticalAlignment="Bottom" Width="165" SelectedIndex="0">
                     <ComboBoxItem Content="Random"/>
                     <ComboBoxItem Content="Alphabet"/>
                     <ComboBoxItem Content="Size"/>
                 </ComboBox>
-                <Label Content="Files presort:" HorizontalAlignment="Right" Margin="0,99.92,120.203,95.226" d:LayoutOverrides="HorizontalAlignment, Height"/>
-                <CheckBox x:Name="IncludeSubDirs" Content="Incude subdirectories" HorizontalAlignment="Left" Margin="138,46.96,0,0" VerticalAlignment="Top"/>
-                <Button x:Name="SelectSrcBtn" Content="Select source" HorizontalAlignment="Left" Margin="317,71.92,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="SelectSource_Click"/>
-                <Button x:Name="SelectTrgBtn" Content="Select target" HorizontalAlignment="Right" Margin="0,71.92,31.75,0" VerticalAlignment="Top" Width="75" Height="23" Click="SelectTarget_Click"/>
+                <Label Content="Files presort:" HorizontalAlignment="Right" Margin="0,157,559,38"/>
+                <CheckBox x:Name="IncludeSubDirs" Content="Incude subdirectories" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top"/>
+                <Button x:Name="SelectSrcBtn" Content="Select source" HorizontalAlignment="Left" Margin="317,41,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="SelectSource_Click"/>
+                <Button x:Name="SelectTrgBtn" Content="Select target" HorizontalAlignment="Right" Margin="0,41,32,0" VerticalAlignment="Top" Width="75" Height="23" Click="SelectTarget_Click"/>
+                <Label Content="File processing mode:" HorizontalAlignment="Right" Margin="0,69,72,0" VerticalAlignment="Top" Width="182"/>
+                <ComboBox x:Name="FileProcessing" HorizontalAlignment="Right" Margin="0,0,82,104" VerticalAlignment="Bottom" Width="172" SelectedIndex="0">
+                    <ComboBoxItem Content="Serial"/>
+                    <ComboBoxItem Content="Task"/>
+                    <ComboBoxItem Content="Action"/>
+                    <ComboBoxItem Content="PLINQ"/>
+                    <ComboBoxItem Content="Async"/>
+                </ComboBox>
             </Grid>
         </GroupBox>
         <GroupBox Header="Rename options" Margin="10,259.066,0,10" HorizontalAlignment="Left" Width="428">
@@ -49,7 +57,7 @@
         </GroupBox>
         <Button Content="Start" Margin="443,0,293,88" VerticalAlignment="Bottom" Height="44" Click="Start_Click"/>
         <Button Content="Exit" Margin="443,0,293,10" VerticalAlignment="Bottom" Height="44" Click="Exit_Click"/>
-        <ProgressBar x:Name="Progress" Height="13" Margin="443,0,293,64" VerticalAlignment="Bottom"/>
+        <ProgressBar x:Name="Progress" Height="13" Margin="443,0,293,64" VerticalAlignment="Bottom" Visibility="Collapsed"/>
         <Label Content="Folders processed:" HorizontalAlignment="Right" Margin="0,0,170,106" VerticalAlignment="Bottom"/>
         <Label Content="Files processed:" HorizontalAlignment="Right" Margin="0,0,185,56" VerticalAlignment="Bottom"/>
         <Label Content="Time elapsed:" HorizontalAlignment="Right" Margin="0,0,195.329,10" VerticalAlignment="Bottom"/>
