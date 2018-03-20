@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using static Sorter.FileProcessors.FileProcessingOptions;
 
@@ -19,54 +20,66 @@ namespace Sorter.FileProcessors
             _options = fileProcessingOptions;
         }
 
+        class FileItem
+        {
+            public FileInfo OriginalFile { get; }
+            public string DestinationFile { get; }
+
+            public FileItem(FileInfo origFile, string destFile)
+            {
+                OriginalFile = origFile;
+                DestinationFile = destFile;
+            }
+        }
+
         public void ProcessData()
         {
+            var filesQueue = new List<FileItem>();
             for (var folderIndex = 0; folderIndex < _options.FoldersCount; folderIndex++)
             {
                 var folderName = _options.TargetDirectory + "\\" + _options.NewFolderName + " " +
                                  (_options.NewFolderPostfix + folderIndex);
-                var filesQueue = new Dictionary<FileInfo, string>(_options.CountFilesPerFolder);
                 for (var i = _fileStartIndex; i < (_fileStartIndex + _options.CountFilesPerFolder); i++)
                 {
                     var newFileName = _options.GetFileName(i);
                     if (newFileName == null) break;
-                    filesQueue.Add(_options.FilesList[i], newFileName);
+                    filesQueue.Add(new FileItem(_options.FilesList[i],folderName + "\\" + newFileName));
                 }
-
-                actions.Add(() => ProcessItem(filesQueue, folderName));
 
                 _fileStartIndex += _options.CountFilesPerFolder;
             }
 
-            var options = new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount - 1 };
-            Parallel.Invoke(options, actions.ToArray());
+            filesQueue.AsParallel().Select(item =>
+            {
+                ProcessItem(item);
+                return item;
+            }).ToList();
         }
 
-        private void ProcessItem(Dictionary<FileInfo, string> queue, string folderName)
+        private void ProcessItem(FileItem fileItem)
         {
-            var newDir = Directory.CreateDirectory(folderName).FullName;
-            foreach (var item in queue)
+            var dirOfDestFile = new FileInfo(fileItem.DestinationFile).Directory;
+            if (!dirOfDestFile.Exists)
             {
-                var destFilename = newDir + "\\" + item.Value;
-                switch (_options.FileManipulationMode)
+                Directory.CreateDirectory(dirOfDestFile.FullName);
+                lock (_foldObj)
                 {
-                    case FileManipulationModeEnum.Copy:
-                        item.Key.CopyTo(destFilename);
-                        break;
-                    case FileManipulationModeEnum.Move:
-                        item.Key.MoveTo(destFilename);
-                        break;
-                }
-
-                lock (_itemObj)
-                {
-                    MainWindow.mainWindow.progress++;
+                    MainWindow.mainWindow.foldersCnt++;
                 }
             }
-
-            lock (_foldObj)
+            switch (_options.FileManipulationMode)
             {
-                MainWindow.mainWindow.foldersCnt++;
+                case FileManipulationModeEnum.Copy:
+                    fileItem.OriginalFile.CopyTo(fileItem.DestinationFile);
+                    break;
+                case FileManipulationModeEnum.Move:
+                    fileItem.OriginalFile.MoveTo(fileItem.DestinationFile);
+                    break;
+            }
+
+            lock (_itemObj)
+            {
+                MainWindow.mainWindow.progress++;
             }
         }
     }
