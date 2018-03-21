@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Sorter.FileProcessors
 {
-    class FileProcessingOptions
+    public class FileProcessingOptions
     {
         public FileProcessingModeEnum FileProcessingMode { get; }
         public FileManipulationModeEnum FileManipulationMode { get; }

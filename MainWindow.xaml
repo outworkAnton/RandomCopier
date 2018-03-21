@@ -39,6 +39,7 @@
                     <ComboBoxItem Content="PLINQ"/>
                     <ComboBoxItem Content="Async"/>
                 </ComboBox>
+                <Button Content="X" Margin="0,41,10,158" Click="ClearFolder_Click" HorizontalAlignment="Right" Width="17"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Rename options" Margin="10,259.066,0,10" HorizontalAlignment="Left" Width="428">
@@ -55,14 +56,14 @@
 
             </Grid>
         </GroupBox>
-        <Button Content="Start" Margin="443,0,293,88" VerticalAlignment="Bottom" Height="44" Click="Start_Click"/>
+        <Button Content="Start" Margin="443,268,293,0" Click="Start_Click" Height="44" VerticalAlignment="Top"/>
         <Button Content="Exit" Margin="443,0,293,10" VerticalAlignment="Bottom" Height="44" Click="Exit_Click"/>
         <ProgressBar x:Name="Progress" Height="13" Margin="443,0,293,64" VerticalAlignment="Bottom" Visibility="Collapsed"/>
-        <Label Content="Folders processed:" HorizontalAlignment="Right" Margin="0,0,170,106" VerticalAlignment="Bottom"/>
-        <Label Content="Files processed:" HorizontalAlignment="Right" Margin="0,0,185,56" VerticalAlignment="Bottom"/>
-        <Label Content="Time elapsed:" HorizontalAlignment="Right" Margin="0,0,195.329,10" VerticalAlignment="Bottom"/>
-        <Label x:Name="FoldCnt" Content="0" Margin="725,0,125,106" VerticalAlignment="Bottom"/>
-        <Label x:Name="FilesProcCount" Content="0" HorizontalAlignment="Left" Margin="725,0,0,56" VerticalAlignment="Bottom"/>
-        <Label x:Name="TimeElapsed" Content="0 min 0 sec" HorizontalAlignment="Left" Margin="724.925,0,0,10" VerticalAlignment="Bottom"/>
+        <Label Content="Folders created:" Margin="0,268,183,0" HorizontalAlignment="Right" Width="94" Height="26" VerticalAlignment="Top"/>
+        <Label Content="Files processed:" HorizontalAlignment="Right" Margin="0,318,185,0" Height="26" VerticalAlignment="Top"/>
+        <Label Content="Time elapsed:" HorizontalAlignment="Right" Margin="0,364,195,0" Height="26" VerticalAlignment="Top"/>
+        <Label x:Name="FoldCnt" Content="0" Margin="725,268,125,0" Height="26" VerticalAlignment="Top"/>
+        <Label x:Name="FilesProcCount" Content="0" HorizontalAlignment="Left" Margin="725,318,0,0" Height="26" VerticalAlignment="Top"/>
+        <Label x:Name="TimeElapsed" Content="0 min 0 sec" HorizontalAlignment="Left" Margin="725,364,0,0" Height="26" VerticalAlignment="Top"/>
     </Grid>
 </Window>

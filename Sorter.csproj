@@ -73,10 +73,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="FileProcessors\ActionFileProcessor.cs" />
+    <Compile Include="FileProcessors\AsyncFileProcessor.cs" />
+    <Compile Include="FileProcessors\FileItem.cs" />
     <Compile Include="FileProcessors\FileProcessingOptions.cs" />
     <Compile Include="FileProcessors\FileProcessorFactory.cs" />
     <Compile Include="FileProcessors\IFileProcessor.cs" />
     <Compile Include="FileProcessors\PLINQFileProcessor.cs" />
+    <Compile Include="FileProcessors\SerialFileProcessor.cs" />
     <Compile Include="FileProcessors\TPLFileProcessor.cs" />
     <Compile Include="WPFExtensions.cs" />
     <Page Include="MainWindow.xaml">
@@ -87,7 +90,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="FileProcessors\SerialFileProcessor.cs" />
+    <Compile Include="FileProcessors\BaseFileProcessor.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

@@ -9,6 +9,7 @@ using Sorter.FileProcessors;
 using Application = System.Windows.Application;
 using static Sorter.FileProcessors.FileProcessingOptions;
 using System.Windows.Input;
+using System.IO;
 
 namespace Sorter
 {
@@ -48,27 +49,15 @@ namespace Sorter
 
         private void Start_Click(object sender, RoutedEventArgs e)
         {
-            var options = new FileProcessingOptions(
-                (FileProcessingModeEnum)Enum.Parse(typeof(FileProcessingModeEnum), FileProcessing.Text, true),
-                MoveMode.IsChecked != null && MoveMode.IsChecked.Value ? FileManipulationModeEnum.Move : FileManipulationModeEnum.Copy,
-                SourceDirectory.Text,
-                IncludeSubDirs.IsChecked,
-                string.IsNullOrWhiteSpace(TargetDirectory.Text) ? null : TargetDirectory.Text,
-                NewFolderName.Text,
-                string.IsNullOrWhiteSpace(NewFolderPostfix.Text) ? 1 : Convert.ToInt32(NewFolderPostfix.Text),
-                string.IsNullOrWhiteSpace(FilesPerFolder.Text) ? 0 : Convert.ToInt32(FilesPerFolder.Text),
-                (PresortMethodEnum)Enum.Parse(typeof(PresortMethodEnum), FilesPresort.Text, true),
-                (RenameModeEnum)Enum.Parse(typeof(RenameModeEnum), RenameMode.Text.Replace(" ", ""), true),
-                Symbols.Text);
+            var options = GetOptions();
             var span = new TimeSpan();
-
             var perf = new Stopwatch();
             perf.Start();
             Progress.Visibility = Visibility.Visible;
 
             var taskInThread = Task.Factory.StartNew(() =>
             {
-                new FileProcessorFactory(options).CreateFileProcessor().ProcessData();
+                FileProcessorFactory.CreateFileProcessor(options).ProcessData();
             });
             while (!taskInThread.IsCompleted)
             {
@@ -81,6 +70,22 @@ namespace Sorter
             perf.Stop();
             span = perf.Elapsed;
             TimeElapsed.Content = $"{span.Minutes} min {span.Seconds} sec";
+        }
+
+        private FileProcessingOptions GetOptions()
+        {
+            return new FileProcessingOptions(
+                (FileProcessingModeEnum)Enum.Parse(typeof(FileProcessingModeEnum), FileProcessing.Text, true),
+                MoveMode.IsChecked != null && MoveMode.IsChecked.Value ? FileManipulationModeEnum.Move : FileManipulationModeEnum.Copy,
+                SourceDirectory.Text,
+                IncludeSubDirs.IsChecked,
+                string.IsNullOrWhiteSpace(TargetDirectory.Text) ? null : TargetDirectory.Text,
+                NewFolderName.Text,
+                string.IsNullOrWhiteSpace(NewFolderPostfix.Text) ? 1 : Convert.ToInt32(NewFolderPostfix.Text),
+                string.IsNullOrWhiteSpace(FilesPerFolder.Text) ? 0 : Convert.ToInt32(FilesPerFolder.Text),
+                (PresortMethodEnum)Enum.Parse(typeof(PresortMethodEnum), FilesPresort.Text, true),
+                (RenameModeEnum)Enum.Parse(typeof(RenameModeEnum), RenameMode.Text.Replace(" ", ""), true),
+                Symbols.Text);
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -109,6 +114,24 @@ namespace Sorter
             using (var dlg = new FolderBrowserDialog())
             {
                 return dlg.ShowDialog(this.GetIWin32Window()) == System.Windows.Forms.DialogResult.OK ? dlg.SelectedPath : null;
+            }
+        }
+
+        private void ClearFolder_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(TargetDirectory.Text))
+            {
+                var td = new DirectoryInfo(TargetDirectory.Text);
+
+                foreach (FileInfo file in td.EnumerateFiles("*.*", SearchOption.AllDirectories))
+                {
+                    file.Attributes = FileAttributes.Normal;
+                    file.Delete();
+                }
+                foreach (DirectoryInfo dir in td.EnumerateDirectories())
+                {
+                    dir.Delete(true);
+                }
             }
         }
     }

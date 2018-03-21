@@ -1,6 +1,6 @@
 ﻿namespace Sorter.FileProcessors
 {
-    interface IFileProcessor
+    public interface IFileProcessor
     {
         void ProcessData();
     }

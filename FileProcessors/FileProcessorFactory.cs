@@ -1,31 +1,24 @@
 ﻿using static Sorter.FileProcessors.FileProcessingOptions;
 using System;
 
-
 namespace Sorter.FileProcessors
 {
-    class FileProcessorFactory
+    static class FileProcessorFactory
     {
-        private FileProcessingOptions _options;
-        public FileProcessorFactory(FileProcessingOptions fileProcessingOptions)
+        public static IFileProcessor CreateFileProcessor(FileProcessingOptions fileProcessingOptions)
         {
-            _options = fileProcessingOptions;
-        }
-
-        public IFileProcessor CreateFileProcessor()
-        {
-            switch (_options.FileProcessingMode)
+            switch (fileProcessingOptions.FileProcessingMode)
             {
                 case FileProcessingModeEnum.Serial:
-                    return new SerialFileProcessor(_options);
+                    return new SerialFileProcessor(fileProcessingOptions);
                 case FileProcessingModeEnum.Task:
-                    return new TPLFileProcessor(_options);
+                    return new TPLFileProcessor(fileProcessingOptions);
                 case FileProcessingModeEnum.Action:
-                    return new ActionFileProcessor(_options);
+                    return new ActionFileProcessor(fileProcessingOptions);
                 case FileProcessingModeEnum.PLINQ:
-                    return new PLINQFileProcessor(_options);
+                    return new PLINQFileProcessor(fileProcessingOptions);
                 case FileProcessingModeEnum.Async:
-                    throw new NotImplementedException();
+                    return new AsyncFileProcessor(fileProcessingOptions);
                 default:
                     throw new NotImplementedException();
             }
