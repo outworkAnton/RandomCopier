@@ -2,16 +2,8 @@
 
 namespace Sorter.FileProcessors
 {
-    class AsyncFileProcessor : BaseFileProcessor, IFileProcessor
+    class AsyncFileProcessor : BaseFileProcessor
     {
-
-        public AsyncFileProcessor(FileProcessingOptions fileProcessingOptions) : base(fileProcessingOptions) { }
-
-        public void ProcessData()
-        {
-            ProcessDataItems(CollectItems());
-        }
-
         public override void ProcessDataItems(List<FileItem> items)
         {
             

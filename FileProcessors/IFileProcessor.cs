@@ -2,6 +2,6 @@
 {
     public interface IFileProcessor
     {
-        void ProcessData();
+        void ProcessData(FileProcessingOptions fileProcessingOptions);
     }
 }

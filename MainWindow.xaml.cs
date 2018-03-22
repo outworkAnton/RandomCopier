@@ -57,7 +57,7 @@ namespace Sorter
 
             var taskInThread = Task.Factory.StartNew(() =>
             {
-                FileProcessorFactory.CreateFileProcessor(options).ProcessData();
+                FileProcessorFactory.CreateFileProcessor(options.FileProcessingMode).ProcessData(options);
             });
             while (!taskInThread.IsCompleted)
             {
@@ -133,6 +133,12 @@ namespace Sorter
                     dir.Delete(true);
                 }
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            NewWindow newWindow = new NewWindow();
+            newWindow.ShowDialog();
         }
     }
 }

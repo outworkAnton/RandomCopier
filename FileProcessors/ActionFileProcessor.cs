@@ -5,19 +5,11 @@ using System.Threading.Tasks;
 
 namespace Sorter.FileProcessors
 {
-    class ActionFileProcessor : BaseFileProcessor, IFileProcessor
+    class ActionFileProcessor : BaseFileProcessor
     {
-        private List<Action> actions = new List<Action>();
-
-        public ActionFileProcessor(FileProcessingOptions fileProcessingOptions) : base(fileProcessingOptions) { }
-
-        public void ProcessData()
-        {
-            ProcessDataItems(CollectItems());
-        }
-
         public override void ProcessDataItems(List<FileItem> items)
         {
+            var actions = new List<Action>();
             items.AsParallel().Select(item => {
                 actions.Add(() => ProcessItem(item));
                 return item;

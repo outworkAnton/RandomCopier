@@ -2,15 +2,8 @@
 
 namespace Sorter.FileProcessors
 {
-    public class SerialFileProcessor : BaseFileProcessor, IFileProcessor
+    public class SerialFileProcessor : BaseFileProcessor
     {
-        public SerialFileProcessor(FileProcessingOptions fileProcessingOptions) : base(fileProcessingOptions) { }
-
-        public void ProcessData()
-        {
-            ProcessDataItems(CollectItems());
-        }
-
         public override void ProcessDataItems(List<FileItem> items)
         {
             foreach (var item in items)

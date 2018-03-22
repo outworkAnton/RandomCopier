@@ -5,20 +5,20 @@ namespace Sorter.FileProcessors
 {
     static class FileProcessorFactory
     {
-        public static IFileProcessor CreateFileProcessor(FileProcessingOptions fileProcessingOptions)
+        public static IFileProcessor CreateFileProcessor(FileProcessingModeEnum fileProcessingMode)
         {
-            switch (fileProcessingOptions.FileProcessingMode)
+            switch (fileProcessingMode)
             {
                 case FileProcessingModeEnum.Serial:
-                    return new SerialFileProcessor(fileProcessingOptions);
+                    return new SerialFileProcessor();
                 case FileProcessingModeEnum.Task:
-                    return new TPLFileProcessor(fileProcessingOptions);
+                    return new TPLFileProcessor();
                 case FileProcessingModeEnum.Action:
-                    return new ActionFileProcessor(fileProcessingOptions);
+                    return new ActionFileProcessor();
                 case FileProcessingModeEnum.PLINQ:
-                    return new PLINQFileProcessor(fileProcessingOptions);
+                    return new PLINQFileProcessor();
                 case FileProcessingModeEnum.Async:
-                    return new AsyncFileProcessor(fileProcessingOptions);
+                    return new AsyncFileProcessor();
                 default:
                     throw new NotImplementedException();
             }

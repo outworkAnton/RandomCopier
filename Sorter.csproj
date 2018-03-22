@@ -52,7 +52,7 @@
     <StartupObject>Sorter.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>if_Settings_111242.ico</ApplicationIcon>
+    <ApplicationIcon>Images\if_Settings_111242.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -81,6 +81,9 @@
     <Compile Include="FileProcessors\PLINQFileProcessor.cs" />
     <Compile Include="FileProcessors\SerialFileProcessor.cs" />
     <Compile Include="FileProcessors\TPLFileProcessor.cs" />
+    <Compile Include="NewWindow.xaml.cs">
+      <DependentUpon>NewWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WPFExtensions.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -95,6 +98,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="NewWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -126,7 +133,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="if_Settings_111242.ico" />
+    <Resource Include="Images\if_Settings_111242.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\No.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Yes.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

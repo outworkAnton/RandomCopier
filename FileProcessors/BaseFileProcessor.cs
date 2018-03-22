@@ -4,7 +4,7 @@ using static Sorter.FileProcessors.FileProcessingOptions;
 
 namespace Sorter.FileProcessors
 {
-    public abstract class BaseFileProcessor
+    public abstract class BaseFileProcessor : IFileProcessor
     {
         protected FileProcessingOptions _options;
         private int _fileStartIndex;
@@ -21,12 +21,13 @@ namespace Sorter.FileProcessors
             set { MainWindow.mainWindow.foldersCnt = value; }
         }
 
-        protected BaseFileProcessor(FileProcessingOptions fileProcessingOptions)
+        public virtual void ProcessData(FileProcessingOptions fileProcessingOptions)
         {
             _options = fileProcessingOptions;
+            ProcessDataItems(CollectItems());
         }
 
-        public virtual List<FileItem> CollectItems()
+        private List<FileItem> CollectItems()
         {
             var filesQueue = new List<FileItem>();
             for (var folderIndex = 0; folderIndex < _options.FoldersCount; folderIndex++)
@@ -47,7 +48,7 @@ namespace Sorter.FileProcessors
 
         public abstract void ProcessDataItems(List<FileItem> items);
 
-        public virtual void ProcessItem(FileItem fileItem)
+        protected virtual void ProcessItem(FileItem fileItem)
         {
             var dirOfDestFile = new FileInfo(fileItem.DestinationFile).Directory;
             if (!dirOfDestFile.Exists)
